@@ -1,9 +1,135 @@
 package NewTest
 
 import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions.broadcast
 
 object App1 {
+
+  case class sales (
+                     Region : String,
+                     Country: String,
+                     Item_Type: String,
+                     Sales_Channel: String,
+                     Order_Priority: String,
+                     Order_Date: String,
+                     Order_ID: String,
+                     Ship_Date: String,
+                     Units_Sold: String,
+                     Unit_Price: String,
+                     Unit_Cost: String,
+                     Total_Revenue: String,
+                     Total_Cost: String,
+                     Total_Profit: String
+                   )
+
+
+  case class sales_dt (
+                        Region1 : String,
+                        Country1: String,
+                        Item_Type1: String,
+                        Sales_Channel1: String,
+                        Order_Priority1: String,
+                        Order_Date1: String,
+                        Order_ID1: String,
+                        Ship_Date1: String,
+                        Units_Sold1: String,
+                        Unit_Price1: String,
+                        Unit_Cost1: String,
+                        Total_Revenue1: String,
+                        Total_Cost1: String,
+                        Total_Profit1: String
+                      )
+
+
+  case class sales_db (
+                        Region2 : String,
+                        Country2: String,
+                        Item_Type2: String,
+                        Sales_Channel2: String,
+                        Order_Priority2: String,
+                        Order_Date2: String,
+                        Order_ID2: String,
+                        Ship_Date2: String,
+                        Units_Sold2: String,
+                        Unit_Price2: String,
+                        Unit_Cost2: String,
+                        Total_Revenue2: String,
+                        Total_Cost2: String,
+                        Total_Profit2: String
+                      )
+
+
+
+  case class sales_db1 (
+                         Region3 : String,
+                         Country3: String,
+                         Item_Type3: String,
+                         Sales_Channel3: String,
+                         Order_Priority3: String,
+                         Order_Date3: String,
+                         Order_ID3: String,
+                         Ship_Date3: String,
+                         Units_Sold3: String,
+                         Unit_Price3: String,
+                         Unit_Cost3: String,
+                         Total_Revenue3: String,
+                         Total_Cost3: String,
+                         Total_Profit3: String
+                       )
+
+
+  case class sales_db4 (
+                         Region4 : String,
+                         Country4: String,
+                         Item_Type4: String,
+                         Sales_Channel4: String,
+                         Order_Priority4: String,
+                         Order_Date4: String,
+                         Order_ID4: String,
+                         Ship_Date4: String,
+                         Units_Sold4: String,
+                         Unit_Price4: String,
+                         Unit_Cost4: String,
+                         Total_Revenue4: String,
+                         Total_Cost4: String,
+                         Total_Profit4: String
+                       )
+
+
+  case class sales_db5 (
+                         Region5 : String,
+                         Country5: String,
+                         Item_Type5: String,
+                         Sales_Channel5: String,
+                         Order_Priority5: String,
+                         Order_Date5: String,
+                         Order_ID5: String,
+                         Ship_Date5: String,
+                         Units_Sold5: String,
+                         Unit_Price5: String,
+                         Unit_Cost5: String,
+                         Total_Revenue5: String,
+                         Total_Cost5: String,
+                         Total_Profit5: String
+                       )
+
+  case class sales_db6 (
+                         Region6 : String,
+                         Country6: String,
+                         Item_Type6: String,
+                         Sales_Channel6: String,
+                         Order_Priority6: String,
+                         Order_Date6: String,
+                         Order_ID6: String,
+                         Ship_Date6: String,
+                         Units_Sold6: String,
+                         Unit_Price6: String,
+                         Unit_Cost6: String,
+                         Total_Revenue6: String,
+                         Total_Cost6: String,
+                         Total_Profit6: String
+                       )
 
   def main(args: Array[String]): Unit = {
 
@@ -14,131 +140,6 @@ object App1 {
         .config("spark.master", "local")
         .getOrCreate()
 
-
-    case class sales (
-                       Region : String,
-                      Country: String,
-                      Item_Type: String,
-                      Sales_Channel: String,
-                       Order_Priority: String,
-                      Order_Date: String,
-                      Order_ID: String,
-                      Ship_Date: String,
-                      Units_Sold: String,
-                      Unit_Price: String,
-                       Unit_Cost: String,
-                       Total_Revenue: String,
-                       Total_Cost: String,
-                       Total_Profit: String
-                     )
-
-
-    case class sales_dt (
-                       Region1 : String,
-                       Country1: String,
-                       Item_Type1: String,
-                       Sales_Channel1: String,
-                       Order_Priority1: String,
-                       Order_Date1: String,
-                       Order_ID1: String,
-                       Ship_Date1: String,
-                       Units_Sold1: String,
-                       Unit_Price1: String,
-                       Unit_Cost1: String,
-                       Total_Revenue1: String,
-                       Total_Cost1: String,
-                       Total_Profit1: String
-                     )
-
-
-    case class sales_db (
-                          Region2 : String,
-                          Country2: String,
-                          Item_Type2: String,
-                          Sales_Channel2: String,
-                          Order_Priority2: String,
-                          Order_Date2: String,
-                          Order_ID2: String,
-                          Ship_Date2: String,
-                          Units_Sold2: String,
-                          Unit_Price2: String,
-                          Unit_Cost2: String,
-                          Total_Revenue2: String,
-                          Total_Cost2: String,
-                          Total_Profit2: String
-                        )
-
-
-
-    case class sales_db1 (
-                          Region3 : String,
-                          Country3: String,
-                          Item_Type3: String,
-                          Sales_Channel3: String,
-                          Order_Priority3: String,
-                          Order_Date3: String,
-                          Order_ID3: String,
-                          Ship_Date3: String,
-                          Units_Sold3: String,
-                          Unit_Price3: String,
-                          Unit_Cost3: String,
-                          Total_Revenue3: String,
-                          Total_Cost3: String,
-                          Total_Profit3: String
-                        )
-
-
-    case class sales_db4 (
-                           Region4 : String,
-                           Country4: String,
-                           Item_Type4: String,
-                           Sales_Channel4: String,
-                           Order_Priority4: String,
-                           Order_Date4: String,
-                           Order_ID4: String,
-                           Ship_Date4: String,
-                           Units_Sold4: String,
-                           Unit_Price4: String,
-                           Unit_Cost4: String,
-                           Total_Revenue4: String,
-                           Total_Cost4: String,
-                           Total_Profit4: String
-                         )
-
-
-    case class sales_db5 (
-                           Region5 : String,
-                           Country5: String,
-                           Item_Type5: String,
-                           Sales_Channel5: String,
-                           Order_Priority5: String,
-                           Order_Date5: String,
-                           Order_ID5: String,
-                           Ship_Date5: String,
-                           Units_Sold5: String,
-                           Unit_Price5: String,
-                           Unit_Cost5: String,
-                           Total_Revenue5: String,
-                           Total_Cost5: String,
-                           Total_Profit5: String
-                         )
-
-    case class sales_db6 (
-                           Region6 : String,
-                           Country6: String,
-                           Item_Type6: String,
-                           Sales_Channel6: String,
-                           Order_Priority6: String,
-                           Order_Date6: String,
-                           Order_ID6: String,
-                           Ship_Date6: String,
-                           Units_Sold6: String,
-                           Unit_Price6: String,
-                           Unit_Cost6: String,
-                           Total_Revenue6: String,
-                           Total_Cost6: String,
-                           Total_Profit6: String
-                         )
 
 
     import spark.sqlContext.implicits._
