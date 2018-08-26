@@ -4,6 +4,9 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions.broadcast
 
+
+
+// ./spark-shell --master spark://Shuvamoys-MacBook-Pro.local:7077 --executor-memory 8g 100
 object App1 {
 
   case class sales (
@@ -169,8 +172,10 @@ object App1 {
     df12.createOrReplaceTempView("test")
     val v=spark.sql("select Order_ID,Order_Date, row_number() over(partition by Order_ID order by Order_Date desc) r from test ")
     v.cache
+
     val b=df12.join(broadcast(v) ,v("Order_ID") === df12("Order_ID") && v("Order_Date") === df12("Order_Date")).filter(v("r") ===1)
 
+    val b1=df12.join(v ,v("Order_ID") === df12("Order_ID") && v("Order_Date") === df12("Order_Date")).filter(v("r") ===1)
 
     def benchmark(name: String)(f: => Unit) {
       val startTime = System.nanoTime
