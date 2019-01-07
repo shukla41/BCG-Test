@@ -1,5 +1,6 @@
 package NewTest
 
+import org.apache.spark.HashPartitioner
 import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.DataFrame
 import org.apache.spark.sql.functions.broadcast
@@ -147,9 +148,9 @@ object App1 {
 
     import spark.sqlContext.implicits._
 
-    val p=spark.sparkContext.textFile("/Users/shuvamoymondal/Desktop/Records.csv")
-    val header=p.first()
-    val data=p.filter(o=> o !=header)
+    val k=spark.sparkContext.textFile("/Users/shuvamoymondal/Desktop/Records.csv")
+    val header=k.first()
+    val data=k.filter(o=> o !=header)
   //  println(data.header)
     println(header)
 
@@ -171,11 +172,18 @@ object App1 {
 
     df12.createOrReplaceTempView("test")
     val v=spark.sql("select Order_ID,Order_Date, row_number() over(partition by Order_ID order by Order_Date desc) r from test ")
+
+     // v.repartition()
+    //cache the small table
     v.cache
 
-    val b=df12.join(broadcast(v) ,v("Order_ID") === df12("Order_ID") && v("Order_Date") === df12("Order_Date")).filter(v("r") ===1)
+    val b=df12.join(broadcast(v) ,df12("Order_ID") === v("Order_ID") && df12("Order_Date") === v("Order_Date")).filter(v("r") ===1).select(df12("*"))
 
-    val b1=df12.join(v ,v("Order_ID") === df12("Order_ID") && v("Order_Date") === df12("Order_Date")).filter(v("r") ===1)
+   // println(b.count)
+
+    b.repartition(100,b("Order_ID")).count
+
+    //val b1=df12.join(v ,v("Order_ID") === df12("Order_ID") && v("Order_Date") === df12("Order_Date")).filter(v("r") ===1)
 
     def benchmark(name: String)(f: => Unit) {
       val startTime = System.nanoTime
