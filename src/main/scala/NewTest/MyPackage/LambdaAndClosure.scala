@@ -52,10 +52,47 @@ object mytest {
        factor
     })
 
-   println(p)
 
 
 
+    // Higher order function example, here we must use anonymous function inside the body of the function
+
+
+    def greetSomeone(s:String) ={
+      println("testing")
+        (name: String) => println(s"$s $name")
+       // if you do not pass, you can pass blank function
+        () => println(s"this is $s")
+    }
+
+    val j=greetSomeone("hello")
+        j("Shuva")
+
+    greetSomeone("Hi")("guy")
+
+
+    def f1(x: Int) = (y:Int) => math.sqrt(x + y)
+
+
+
+    val k= f1(15)(10)
+    println(k)
+
+
+
+
+    def sumOfX(f:Int=> Int,a:Int,b:Int): Int ={
+      if (a> b) 0 else f(a) + sumOfX(f,a+1,b)
+    }
+
+
+
+    val si = sumOfX(x => x,0,5)
+    println(si)
+
+    val k1=sumOfX(x=> x *x, _:Int , _:Int)
+    val j1=k1(3,4)
+    println(j1)
   }
 
 }
